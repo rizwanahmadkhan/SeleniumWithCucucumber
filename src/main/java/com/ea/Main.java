@@ -70,7 +70,7 @@ public class Main {
         devTools.send(emulateNetworkConditions(true, 100, 1000, 2000,
                 Optional.of(ConnectionType.cellular3g)));
 
-        //devTools.addListener(loadingFailed(), loadingFailed -> assertEquals(loadingFailed.getErrorText(), "net::ERR_INTERNET_DISCONNECTED"));
+        devTools.addListener(loadingFailed(), loadingFailed -> assertEquals(loadingFailed.getErrorText(), "net::ERR_INTERNET_DISCONNECTED"));
     }
 
     /**
@@ -97,7 +97,7 @@ public class Main {
         chromeDevTools.send(Network.setBlockedURLs(ImmutableList.of("*.css", "*.jpg")));
 
         //add event listener to verify that css and png are blocked
-        /*chromeDevTools.addListener(loadingFailed(), loadingFailed -> {
+        chromeDevTools.addListener(loadingFailed(), loadingFailed -> {
 
             if (loadingFailed.getResourceType().equals(ResourceType.Stylesheet)) {
                 assertEquals(loadingFailed.getBlockedReason(), BlockedReason.inspector);
@@ -107,7 +107,7 @@ public class Main {
                 assertEquals(loadingFailed.getBlockedReason(), BlockedReason.mixedContent);
             }
 
-        });*/
+        });
     }
 
     /**
@@ -115,7 +115,7 @@ public class Main {
      * @param devTools
      */
     private static void inspectDetached(DevTools devTools) {
-        //devTools.addListener(detached(), Assert::assertNotNull);
+        devTools.addListener(detached(), Assert::assertNotNull);
         devTools.send(Inspector.enable());
         Set<TargetInfo> targetInfos = devTools.send(Target.getTargets());
         targetInfos.forEach(
